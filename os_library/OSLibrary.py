@@ -1,4 +1,5 @@
 from pywinauto import Application, Desktop
+from pywinauto.application import WindowSpecification
 import time
 import os
 from robot.api.deco import keyword, library
@@ -7,11 +8,14 @@ from robot.api.deco import keyword, library
 class OSLibrary:
     def __init__(self):
         self.app = None
-        self.window = None
+        self.window: WindowSpecification = None
 
     @keyword
     def launch_app(self, path):
-        """Launch an application using pywinauto."""
+        """Launch an application using pywinauto.
+        
+            Better to use 'Run'
+        """
         if not os.path.exists(path):
             raise FileNotFoundError(f"Executable not found at {path}")
         self.app = Application(backend="uia").start(path)
